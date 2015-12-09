@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.shubhendu.photoselector.PhotoSelectorActivity">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_images"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_bottom"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:background="?attr/colorPrimary"
+        android:layout_alignParentBottom="true"
+        android:minHeight="?attr/actionBarSize"
+        app:contentInsetLeft="16dp"
+        app:contentInsetStart="16dp"
+        app:contentInsetRight="16dp"
+        app:contentInsetEnd="16dp">
+        <LinearLayout
+            android:id="@+id/toolbar_menu_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/select_album_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Album"
+                android:textColor="@android:color/white"
+                android:drawableTop="@drawable/ic_view_list_black_24dp"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/take_picture_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Take Picture"
+                android:drawableTop="@drawable/ic_photo_camera_black_24dp"
+                style="?android:attr/borderlessButtonStyle"
+                android:textColor="@android:color/white"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+    </android.support.v7.widget.Toolbar>
+</RelativeLayout>
