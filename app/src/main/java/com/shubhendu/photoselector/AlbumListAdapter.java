@@ -2,6 +2,8 @@ package com.shubhendu.photoselector;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +12,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,9 +85,19 @@ public class AlbumListAdapter extends BaseAdapter {
             if (context instanceof Activity && ((Activity) context).isFinishing()) {
                 return;
             }
-            Picasso.with(context)
+            if(!TextUtils.isEmpty(albumModel.getThumbNailPath())) {
+                Log.d("AAA", albumModel.getThumbNailPath());
+//                Picasso.with(context)
+//                        .load(new File(albumModel.getThumbNailPath()))
+//                        .placeholder(R.drawable.ic_picture_loading)
+//                        .into(imgAlbum);
+                Glide.with(context)
                     .load(albumModel.getThumbNailPath())
+                    .asBitmap()
+                    .override(PhotoSelectorConstants.ALBUM_THUMNAIL_SIZE, PhotoSelectorConstants.ALBUM_THUMNAIL_SIZE)
+                    .placeholder(R.drawable.ic_picture_loading)
                     .into(imgAlbum);
+            }
             txtAlbum.setText(albumModel.getAlbumName());
             txtAlbumCount.setText(Integer.toString(albumModel.getAlbumTotalImages()));
             if(albumModel.isAlbumSelected()) {

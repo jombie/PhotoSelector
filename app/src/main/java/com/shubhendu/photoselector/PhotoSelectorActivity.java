@@ -26,6 +26,12 @@ public class PhotoSelectorActivity extends AppCompatActivity
     private Button selectAlbumBtn;
     private Button takePictureBtn;
     private AlbumListAdapter albumListAdapter;
+    private PhotoGridAdapter photoGridAdapter;
+
+    private List<String> pickedImages;
+    private PickerController pickerController;
+    private String combinedAlbumName;
+    private PhotoSelectorDomain photoSelector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +41,8 @@ public class PhotoSelectorActivity extends AppCompatActivity
         rvImages = (RecyclerView) findViewById(R.id.rv_images);
         selectAlbumBtn = (Button) findViewById(R.id.select_album_btn);
         takePictureBtn = (Button)  findViewById(R.id.take_picture_btn);
-
-        PhotoSelectorDomain photoSelector = new PhotoSelectorDomain(this);
-        photoSelector.updateAlbum(this);
+        combinedAlbumName = getResources().getString(R.string.combined_album_name);
+        getSupportActionBar().setTitle(combinedAlbumName);
 
         albumListAdapter = new AlbumListAdapter(this, albums);
         listPopupWindow = new ListPopupWindow(this);
@@ -62,11 +67,22 @@ public class PhotoSelectorActivity extends AppCompatActivity
             }
         });
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, PickerController.PHOTO_SPAN_COUNT);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, PhotoSelectorConstants.PHOTO_SPAN_COUNT);
         rvImages.setLayoutManager(gridLayoutManager);
         rvImages.setAdapter(null);
         rvImages.setItemAnimator(new DefaultItemAnimator());
+        pickedImages = new ArrayList<>();
+        pickerController = new PickerController(this, getSupportActionBar(), rvImages);
 
+        photoSelector = new PhotoSelectorDomain(this);
+        photoSelector.updateAlbum(this);
+        photoSelector.updatePhotos(null, this);
+
+        ArrayList<String> previousPaths = getIntent().getStringArrayListExtra(PhotoSelectorConstants.PREVIOUS_SELECTED_PATHS);
+        if (previousPaths != null) {
+            pickedImages.addAll(previousPaths);
+        }
+        pickerController.setActionbarTitle(pickedImages.size());
     }
 
     @Override
@@ -80,19 +96,24 @@ public class PhotoSelectorActivity extends AppCompatActivity
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        listPopupWindow.dismiss();
-        AlbumModel albumModel = albums.get(position);
-        getSupportActionBar().setTitle(albumModel.getAlbumName());
-
-//        btSwitchDirectory.setText(albumModel.getAlbumName());
-//        photoGridAdapter.setCurrentDirectoryIndex(position);
-//        photoGridAdapter.notifyDataSetChanged();
+    public void onPhotoLoaded(List<String> allAlbumImages) {
+        photoGridAdapter = new PhotoGridAdapter(PhotoSelectorActivity.this, allAlbumImages, pickedImages, pickerController);
+        rvImages.setAdapter(photoGridAdapter);
+        photoGridAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onPhotoLoaded(List<PhotoModel> photos) {
-        Log.d("AAA", "Loaded Photos " + photos.size());
-
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        AlbumModel currentAlbum = albums.get(position);
+        for (int i = 0; i < parent.getCount(); i++) {
+            AlbumModel otherAlbum = (AlbumModel) parent.getItemAtPosition(i);
+            otherAlbum.setAlbumSelected((i == position));
+        }
+        albumListAdapter.notifyDataSetChanged();
+        listPopupWindow.dismiss();
+        String albumName = currentAlbum.getAlbumName();
+        getSupportActionBar().setTitle(albumName);
+        albumName = albumName.equals(combinedAlbumName) ? null : albumName;
+        photoSelector.updatePhotos(albumName, PhotoSelectorActivity.this);
     }
 }

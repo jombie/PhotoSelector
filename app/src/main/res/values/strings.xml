@@ -5,4 +5,5 @@
     <string name="recent_photos">Recent photos</string>
     <string name="combined_album_name">All Images</string>
     <string name="max_img_limit_reached">Cannot select more than %d images</string>
+    <string name="selected">Selected</string>
 </resources>

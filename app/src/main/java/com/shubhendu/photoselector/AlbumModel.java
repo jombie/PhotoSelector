@@ -7,30 +7,21 @@ public class AlbumModel {
 	private String thumbNailPath;
 	private boolean isAlbumSelected;
 
-	public AlbumModel() {
-		super();
-	}
-	
 	public AlbumModel(String albumName) {
 		this.albumName = albumName;
 	}
-
-	public AlbumModel(String albumName, int albumTotalImages, String recentPhotoPath) {
-		super();
+	public AlbumModel(String albumName, int albumTotalImages) {
 		this.albumName = albumName;
 		this.albumTotalImages = albumTotalImages;
-		this.thumbNailPath = recentPhotoPath;
+	}
+
+	public AlbumModel(String albumName, int albumTotalImages, String thumbNailPath) {
+		this.albumName = albumName;
+		this.albumTotalImages = albumTotalImages;
+		this.thumbNailPath = thumbNailPath;
         this.isAlbumSelected = false;
 	}
 	
-	public AlbumModel(String albumName, int albumTotalImages, String recentPhotoPath, boolean isCheck) {
-		super();
-		this.albumName = albumName;
-		this.albumTotalImages = albumTotalImages;
-		this.thumbNailPath = recentPhotoPath;
-		this.isAlbumSelected = isCheck;
-	}
-
 	public String getAlbumName() {
 		return albumName;
 	}

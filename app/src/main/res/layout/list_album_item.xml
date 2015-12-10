@@ -10,14 +10,16 @@
 
     <FrameLayout
         android:layout_width="60dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
         android:layout_gravity="center_horizontal">
         <ImageView
             android:id="@+id/img_album"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_camera_normal"/>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_picture_loading"/>
     </FrameLayout>
 
     <LinearLayout

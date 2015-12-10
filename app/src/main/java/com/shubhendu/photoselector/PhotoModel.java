@@ -6,19 +6,26 @@ public class PhotoModel implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	int imgOrder;
+	int imgOrder = -1;
     int imgPosition;
-	private String originalPath;
-	private boolean isChecked;
+	private String imgPath;
+	private boolean isInitialized;
 
-	public PhotoModel(String originalPath, boolean isChecked) {
+    public PhotoModel(int imgOrder, int imgPosition, String imgPath, boolean isInitialized) {
+        this.imgOrder = imgOrder;
+        this.imgPosition = imgPosition;
+        this.imgPath = imgPath;
+        this.isInitialized = isInitialized;
+    }
+
+    public PhotoModel(String imgPath, boolean isInitialized) {
 		super();
-		this.originalPath = originalPath;
-		this.isChecked = isChecked;
+		this.imgPath = imgPath;
+		this.isInitialized = isInitialized;
 	}
 
-	public PhotoModel(String originalPath) {
-		this.originalPath = originalPath;
+	public PhotoModel(String imgPath) {
+		this.imgPath = imgPath;
 	}
 
 	public PhotoModel() {
@@ -40,21 +47,21 @@ public class PhotoModel implements Serializable {
         this.imgPosition = imgPosition;
     }
 
-    public String getOriginalPath() {
-		return originalPath;
+    public String getImgPath() {
+		return imgPath;
 	}
 
-	public void setOriginalPath(String originalPath) {
-		this.originalPath = originalPath;
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
 	}
 
-	public boolean isChecked() {
-		return isChecked;
+	public boolean isInitialized() {
+		return isInitialized;
 	}
 
-	public void setChecked(boolean isChecked) {
-		System.out.println("checked " + isChecked + " for " + originalPath);
-		this.isChecked = isChecked;
+	public void setInitialized(boolean isInitialized) {
+		System.out.println("checked " + isInitialized + " for " + imgPath);
+		this.isInitialized = isInitialized;
 	}
 
 	/* (non-Javadoc)
@@ -64,7 +71,7 @@ public class PhotoModel implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((originalPath == null) ? 0 : originalPath.hashCode());
+		result = prime * result + ((imgPath == null) ? 0 : imgPath.hashCode());
 		return result;
 	}
 
@@ -83,14 +90,15 @@ public class PhotoModel implements Serializable {
 			return false;
 		}
 		PhotoModel other = (PhotoModel) obj;
-		if (originalPath == null) {
-			if (other.originalPath != null) {
+		if (imgPath == null) {
+			if (other.imgPath != null) {
 				return false;
 			}
-		} else if (!originalPath.equals(other.originalPath)) {
+		} else if (!imgPath.equals(other.imgPath)) {
 			return false;
 		}
 		return true;
 	}
+
 
 }

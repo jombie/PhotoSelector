@@ -5,59 +5,20 @@
     android:layout_height="match_parent"
     android:background="#EBF7FF">
 
-    <RelativeLayout
-        android:id="@+id/area_thumb"
+    <ImageView
+        android:id="@+id/img_thumb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#d9d9d9">
+        android:layout_centerInParent="true"
+        android:scaleType="centerCrop" />
 
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_centerInParent="true"
-            android:background="@drawable/ic_picture_loading" />
-
-        <ImageView
-            android:id="@+id/img_thumb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:scaleType="centerCrop" />
-    </RelativeLayout>
-
-    <!--<CheckBox-->
-    <!--android:id="@+id/chk_photo"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignParentBottom="true"-->
-    <!--android:layout_alignRight="@+id/area_thum"-->
-    <!--android:button="@null"-->
-    <!--android:clickable="false" />-->
-
-
-    <TextView
-        android:id="@+id/txt_pick_count"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#bb000000"
-        android:gravity="center"
-        android:textColor="#ffffff"
-        android:textSize="32dp"
-        android:textStyle="bold"
-        android:visibility="gone" />
-
-    <!-- -->
-    <!--<TextView-->
-    <!--android:id="@+id/txt_pick_count"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:alpha="0.6"-->
-    <!--android:background="?attr/colorPrimary"-->
-    <!--android:gravity="center"-->
-    <!--android:text="1"-->
-    <!--android:textColor="#ffffff"-->
-    <!--android:textSize="30dp"-->
-    <!--android:textStyle="bold"-->
-    <!--android:visibility="visible" />-->
+    <CheckBox
+        android:id="@+id/cb_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/btn_checkbox_selector"
+        android:button="@null" />
 
 </RelativeLayout>

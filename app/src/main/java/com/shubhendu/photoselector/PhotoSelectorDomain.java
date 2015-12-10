@@ -11,37 +11,18 @@ import java.util.List;
 @SuppressLint("HandlerLeak")
 public class PhotoSelectorDomain {
 
-	private AlbumController albumController;
+	private ImageController imageController;
+
 	public interface PhotoListener {
-		void onPhotoLoaded(List<PhotoModel> photos);
+		void onPhotoLoaded(List<String> photos);
 	}
 	public interface AlbumListener {
 		void onAlbumLoaded(List<AlbumModel> albums);
 	}
 
 	public PhotoSelectorDomain(Context context) {
-		albumController = new AlbumController(context);
+		this.imageController = new ImageController(context);
 	}
-
-//	public void getReccent(final PhotoSelectorActivity.OnLocalReccentListener listener) {
-//		final Handler handler = new Handler() {
-//			@SuppressWarnings("unchecked")
-//			@Override
-//			public void handleMessage(Message msg) {
-//				listener.onPhotoLoaded((List<PhotoModel>) msg.obj);
-//			}
-//		};
-//		new Thread(new Runnable() {
-//			@Override
-//			public void run() {
-//				List<PhotoModel> photos = albumController.getCurrent();
-//				Message msg = new Message();
-//				msg.obj = photos;
-//				handler.sendMessage(msg);
-//			}
-//		}).start();
-//	}
-//
 
 	public void updateAlbum(final AlbumListener listener) {
 		final Handler handler = new Handler() {
@@ -54,7 +35,7 @@ public class PhotoSelectorDomain {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				List<AlbumModel> albums = albumController.getAlbums();
+				List<AlbumModel> albums = imageController.getAlbums();
 				Message msg = new Message();
 				msg.obj = albums;
 				handler.sendMessage(msg);
@@ -62,23 +43,26 @@ public class PhotoSelectorDomain {
 		}).start();
 	}
 
-//	public void getAlbum(final String name, final PhotoSelectorActivity.OnLocalReccentListener listener) {
-//		final Handler handler = new Handler() {
-//			@SuppressWarnings("unchecked")
-//			@Override
-//			public void handleMessage(Message msg) {
-//				listener.onPhotoLoaded((List<PhotoModel>) msg.obj);
-//			}
-//		};
-//		new Thread(new Runnable() {
-//			@Override
-//			public void run() {
-//				List<PhotoModel> photos = albumController.getAlbum(name);
-//				Message msg = new Message();
-//				msg.obj = photos;
-//				handler.sendMessage(msg);
-//			}
-//		}).start();
-//	}
+    public void updatePhotos(final String albumName, final PhotoListener listener) {
 
+		final Handler handler = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+				listener.onPhotoLoaded((List<String>) msg.obj);
+			}
+		};
+
+        new Thread(new Runnable() {
+			@Override
+			public void run() {
+
+                List<String> photos = (null == albumName) ?
+                    imageController.getAllPhotos() :
+                    imageController.getAlbumPhotos(albumName);
+				Message msg = new Message();
+				msg.obj = photos;
+				handler.sendMessage(msg);
+			}
+		}).start();
+    }
 }
