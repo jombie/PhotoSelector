@@ -94,7 +94,7 @@ public class AlbumListAdapter extends BaseAdapter {
                 Glide.with(context)
                     .load(albumModel.getThumbNailPath())
                     .asBitmap()
-                    .override(PhotoSelectorConstants.ALBUM_THUMNAIL_SIZE, PhotoSelectorConstants.ALBUM_THUMNAIL_SIZE)
+                    .override(PhotoSelectorConstants.ALBUM_THUMBNAIL_SIZE, PhotoSelectorConstants.ALBUM_THUMBNAIL_SIZE)
                     .placeholder(R.drawable.ic_picture_loading)
                     .into(imgAlbum);
             }

@@ -29,8 +29,8 @@ public class PhotoGridAdapter
 
 
     private Context context;
-    private List<String> pickedImages = new ArrayList<>();
-    private List<String> currentAlbumImages;
+    private List<PhotoModel> pickedImages = new ArrayList<>();
+    private List<PhotoModel> currentAlbumImages;
     private PickerController pickerController;
     private RelativeLayout.LayoutParams params;
 
@@ -50,8 +50,8 @@ public class PhotoGridAdapter
         }
     }
 
-    public PhotoGridAdapter(Context context, List<String> currentAlbumImages,
-                            List<String> pickedImages, PickerController pickerController) {
+    public PhotoGridAdapter(Context context, List<PhotoModel> currentAlbumImages,
+                            List<PhotoModel> pickedImages, PickerController pickerController) {
         this.context = context;
         this.currentAlbumImages = currentAlbumImages;
         this.pickerController = pickerController;
@@ -70,10 +70,15 @@ public class PhotoGridAdapter
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-        final String currentImage = currentAlbumImages.get(position);
-        if (!TextUtils.isEmpty(currentImage)) {
+        final PhotoModel currentImage = currentAlbumImages.get(position);
+        for (int i = 0; i < pickedImages.size(); i++) {
+            if(pickedImages.get(i).getImgPath().equals(currentImage.getImgPath()))
+                currentImage.setChecked(pickedImages.get(i).isChecked());
+        }
+        holder.cbPhoto.setChecked(currentImage.isChecked());
+        if (!TextUtils.isEmpty(currentImage.getImgPath())) {
             Glide.with(context)
-                .load(currentImage)
+                .load(currentImage.getImgPath())
                 .override(width, height)
                 .crossFade()
                 .centerCrop()
@@ -95,11 +100,12 @@ public class PhotoGridAdapter
 
                 if(holder.cbPhoto.isChecked()) {
                     holder.cbPhoto.setChecked(false);
+                    currentImage.setChecked(false);
                     holder.imgPhoto.clearColorFilter();
                     pickedImages.remove(currentImage);
                 } else {
-                    if(pickedImages.size() >= PhotoSelectorConstants.ALBUM_PICKER_COUNT) {
-                        String message = context.getResources().getString(R.string.max_img_limit_reached, PhotoSelectorConstants.ALBUM_PICKER_COUNT);
+                    if(pickedImages.size() >= PhotoSelectorConstants.ALBUM_SELECTOR_COUNT) {
+                        String message = context.getResources().getString(R.string.max_img_limit_reached, PhotoSelectorConstants.ALBUM_SELECTOR_COUNT);
                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                         return;
                     }
@@ -107,6 +113,7 @@ public class PhotoGridAdapter
                     holder.imgPhoto.setDrawingCacheEnabled(true);
                     holder.imgPhoto.buildDrawingCache();
                     holder.imgPhoto.setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+                    currentImage.setChecked(true);
                     if(!pickedImages.contains(currentImage))
                         pickedImages.add(currentImage);
                 }

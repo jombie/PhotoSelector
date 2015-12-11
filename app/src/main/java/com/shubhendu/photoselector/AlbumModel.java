@@ -2,21 +2,20 @@ package com.shubhendu.photoselector;
 
 public class AlbumModel {
 
+    private int albumId;
 	private String albumName;
 	private int albumTotalImages;
 	private String thumbNailPath;
 	private boolean isAlbumSelected;
 
-	public AlbumModel(String albumName) {
+	public AlbumModel(String albumName, int albumId) {
 		this.albumName = albumName;
-	}
-	public AlbumModel(String albumName, int albumTotalImages) {
-		this.albumName = albumName;
-		this.albumTotalImages = albumTotalImages;
+        this.albumId = albumId;
 	}
 
-	public AlbumModel(String albumName, int albumTotalImages, String thumbNailPath) {
+	public AlbumModel(String albumName, int albumId, int albumTotalImages, String thumbNailPath) {
 		this.albumName = albumName;
+        this.albumId = albumId;
 		this.albumTotalImages = albumTotalImages;
 		this.thumbNailPath = thumbNailPath;
         this.isAlbumSelected = false;
@@ -26,16 +25,8 @@ public class AlbumModel {
 		return albumName;
 	}
 
-	public void setAlbumName(String albumName) {
-		this.albumName = albumName;
-	}
-
 	public int getAlbumTotalImages() {
 		return albumTotalImages;
-	}
-
-	public void setAlbumTotalImages(int albumTotalImages) {
-		this.albumTotalImages = albumTotalImages;
 	}
 
 	public String getThumbNailPath() {
@@ -56,6 +47,30 @@ public class AlbumModel {
 
 	public void incrementImageCount() {
 		albumTotalImages++;
+	}
+
+    public int getAlbumId() {
+        return albumId;
+    }
+
+    public void setAlbumId(int albumId) {
+        this.albumId = albumId;
+    }
+
+    @Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		AlbumModel that = (AlbumModel) o;
+
+		return albumName.equals(that.albumName);
+
+	}
+
+	@Override
+	public int hashCode() {
+		return albumName.hashCode();
 	}
 
 	@Override

@@ -14,7 +14,7 @@ public class PhotoSelectorDomain {
 	private ImageController imageController;
 
 	public interface PhotoListener {
-		void onPhotoLoaded(List<String> photos);
+		void onPhotoLoaded(List<PhotoModel> photos);
 	}
 	public interface AlbumListener {
 		void onAlbumLoaded(List<AlbumModel> albums);
@@ -43,26 +43,31 @@ public class PhotoSelectorDomain {
 		}).start();
 	}
 
-    public void updatePhotos(final String albumName, final PhotoListener listener) {
+    public void updatePhotos(final PhotoListener listener) {
+		updatePhotos(null, -1, listener);
+    }
+
+	public void updatePhotos(final String albumName, final int albumId, final PhotoListener listener) {
 
 		final Handler handler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
-				listener.onPhotoLoaded((List<String>) msg.obj);
+				listener.onPhotoLoaded((List<PhotoModel>) msg.obj);
 			}
 		};
 
-        new Thread(new Runnable() {
+		new Thread(new Runnable() {
 			@Override
 			public void run() {
 
-                List<String> photos = (null == albumName) ?
-                    imageController.getAllPhotos() :
-                    imageController.getAlbumPhotos(albumName);
+				List<PhotoModel> photos = (null == albumName) ?
+						imageController.getAllPhotos() :
+						imageController.getAlbumPhotos(albumName, albumId);
 				Message msg = new Message();
 				msg.obj = photos;
 				handler.sendMessage(msg);
 			}
 		}).start();
-    }
+	}
+
 }

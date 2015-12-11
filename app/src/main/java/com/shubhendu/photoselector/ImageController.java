@@ -87,7 +87,7 @@ public class ImageController {
                 } else {
                     String thumbnailPath = cursor.getString(dataColumnIndex);
                     String bucketName = cursor.getString(bucketColumnIndex);
-                    previousAlbum = new AlbumModel(bucketName, 1, thumbnailPath);
+                    previousAlbum = new AlbumModel(bucketName, bucketId, 1, thumbnailPath);
                     previousBucketId = bucketId;
                     albums.add(previousAlbum);
                 }
@@ -101,7 +101,7 @@ public class ImageController {
         return albums;
 	}
 
-    public List<String> getAlbumPhotos(String name) {
+    public List<PhotoModel> getAlbumPhotos(String albumName, int albumId) {
 
 		String[] projection = new String[] {
 				ImageColumns.BUCKET_DISPLAY_NAME,
@@ -111,12 +111,12 @@ public class ImageController {
 
 		Cursor cursor = resolver.query(Media.EXTERNAL_CONTENT_URI,
 				projection, PhotoSelectorConstants.WHERE_CLAUSE,
-				new String[] { name }, ImageColumns.DATE_ADDED);
+				new String[] { albumName, Integer.toString(albumId) }, ImageColumns.DATE_ADDED);
 
 		return getPhotos(cursor);
 	}
 
-	public List<String> getAllPhotos() {
+	public List<PhotoModel> getAllPhotos() {
         String[] projections = new String[] {
                 ImageColumns.DATA,
                 ImageColumns.DATE_ADDED
@@ -128,15 +128,15 @@ public class ImageController {
 		return getPhotos(cursor);
 	}
 
-	private List<String> getPhotos(Cursor cursor) {
+	private List<PhotoModel> getPhotos(Cursor cursor) {
 		if (cursor == null || !cursor.moveToNext())
-			return new ArrayList<String>();
+			return new ArrayList<PhotoModel>();
 
-		List<String> photos = new ArrayList<String>();
+		List<PhotoModel> photos = new ArrayList<PhotoModel>();
 		int dataColumnIndex = cursor.getColumnIndex(ImageColumns.DATA);
 		cursor.moveToLast();
 		do {
-			photos.add(cursor.getString(dataColumnIndex));
+			photos.add(new PhotoModel(cursor.getString(dataColumnIndex)));
 		} while (cursor.moveToPrevious());
 		return photos;
 	}

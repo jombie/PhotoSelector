@@ -7,10 +7,20 @@
     android:layout_height="match_parent"
     tools:context="com.shubhendu.photoselector.PhotoSelectorActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_top"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#3F51B5"
+        app:titleTextColor="@android:color/white"
+        app:subtitleTextColor="@android:color/white"
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_images"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar_top"
         android:layout_above="@+id/toolbar_bottom"/>
 
     <android.support.v7.widget.Toolbar
@@ -37,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:text="Select Album"
                 android:textColor="@android:color/white"
-                android:drawableTop="@drawable/ic_view_list_black_24dp"
+                android:drawableTop="@drawable/ic_view_list_white_24dp"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_weight="1"/>
 
@@ -46,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Take Picture"
-                android:drawableTop="@drawable/ic_photo_camera_black_24dp"
+                android:drawableTop="@drawable/ic_photo_camera_white_24dp"
                 style="?android:attr/borderlessButtonStyle"
                 android:textColor="@android:color/white"
                 android:layout_weight="1"/>

@@ -47,9 +47,9 @@ public class PickerController {
     }
 
     public void setActionbarTitle(int total) {
-        if (PhotoSelectorConstants.ALBUM_PICKER_COUNT == 1)
+        if (PhotoSelectorConstants.ALBUM_SELECTOR_COUNT == 1)
             actionBar.setSubtitle(null);
         else
-            actionBar.setSubtitle(prefixSubTitle +"(" + String.valueOf(total) + "/" + PhotoSelectorConstants.ALBUM_PICKER_COUNT + ")");
+            actionBar.setSubtitle(prefixSubTitle +"(" + String.valueOf(total) + "/" + PhotoSelectorConstants.ALBUM_SELECTOR_COUNT + ")");
     }
 }

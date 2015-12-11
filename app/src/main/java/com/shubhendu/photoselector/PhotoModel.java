@@ -4,48 +4,17 @@ import java.io.Serializable;
 
 public class PhotoModel implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-
-	int imgOrder = -1;
-    int imgPosition;
 	private String imgPath;
-	private boolean isInitialized;
-
-    public PhotoModel(int imgOrder, int imgPosition, String imgPath, boolean isInitialized) {
-        this.imgOrder = imgOrder;
-        this.imgPosition = imgPosition;
-        this.imgPath = imgPath;
-        this.isInitialized = isInitialized;
-    }
-
-    public PhotoModel(String imgPath, boolean isInitialized) {
-		super();
-		this.imgPath = imgPath;
-		this.isInitialized = isInitialized;
-	}
+	private boolean isChecked;
 
 	public PhotoModel(String imgPath) {
+        this(imgPath, false);
+	}
+
+	public PhotoModel(String imgPath, boolean isChecked) {
 		this.imgPath = imgPath;
+		this.isChecked = isChecked;
 	}
-
-	public PhotoModel() {
-	}
-
-    public int getImgOrder() {
-        return imgOrder;
-    }
-
-    public void setImgOrder(int imgOrder) {
-        this.imgOrder = imgOrder;
-    }
-
-    public int getImgPosition() {
-        return imgPosition;
-    }
-
-    public void setImgPosition(int imgPosition) {
-        this.imgPosition = imgPosition;
-    }
 
     public String getImgPath() {
 		return imgPath;
@@ -55,13 +24,12 @@ public class PhotoModel implements Serializable {
 		this.imgPath = imgPath;
 	}
 
-	public boolean isInitialized() {
-		return isInitialized;
+	public boolean isChecked() {
+		return isChecked;
 	}
 
-	public void setInitialized(boolean isInitialized) {
-		System.out.println("checked " + isInitialized + " for " + imgPath);
-		this.isInitialized = isInitialized;
+	public void setChecked(boolean isChecked) {
+		this.isChecked = isChecked;
 	}
 
 	/* (non-Javadoc)
